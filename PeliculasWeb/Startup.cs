@@ -25,7 +25,8 @@ namespace PeliculasWeb
         {
             services.AddControllersWithViews();
 
-            // Linea para los llamados HTTP
+            // Configuración del Cliente HTTP
+            // para llamados Http
             services.AddHttpClient();   
         }
 
