@@ -21,6 +21,7 @@ namespace PeliculasWeb.Repositorio
             _clientFactory = clientFactory;
         }
 
+        // Métodos del Repositorio Genérico
         public async Task<bool> ActualizarAsync(string url, T itemActualizar)
         {
             var peticion = new HttpRequestMessage(HttpMethod.Patch, url);
@@ -51,24 +52,91 @@ namespace PeliculasWeb.Repositorio
 
         }
 
-        public Task<bool> BorrarAsync(string url, int id)
+        public async Task<bool> BorrarAsync(string url, int id)
         {
-            throw new NotImplementedException();
+            var peticion = new HttpRequestMessage(HttpMethod.Delete, url + id);
+
+            var cliente = _clientFactory.CreateClient();
+            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
+
+            // Validar si se borro y retorna boleano
+            if (respuesta.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public Task<bool> CrearAsync(string url, T itemActualizar)
+        public async Task<bool> CrearAsync(string url, T itemCrear)
         {
-            throw new NotImplementedException();
+            var peticion = new HttpRequestMessage(HttpMethod.Post, url);
+
+            if (itemCrear != null)
+            {
+                peticion.Content = new StringContent(
+                    JsonConvert.SerializeObject(itemCrear), Encoding.UTF8, "application/json"
+                    );
+            }
+            else
+            {
+                return false;
+            }
+
+            var cliente = _clientFactory.CreateClient();
+            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
+
+            // Validar si se creo y retorna boleano
+            if (respuesta.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public Task<T> GetAsync(string url, int Id)
+        public async Task<T> GetAsync(string url, int Id)
         {
-            throw new NotImplementedException();
+            var peticion = new HttpRequestMessage(HttpMethod.Get, url + Id);
+
+            var cliente = _clientFactory.CreateClient();
+
+            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
+
+            // Validar si consulto lista y retorna los datos
+            if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var jsonString = await respuesta.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(jsonString);
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public Task<IEnumerable> GetTodoAsync(string url)
+        public async Task<IEnumerable> GetTodoAsync(string url)
         {
-            throw new NotImplementedException();
+            var peticion = new HttpRequestMessage(HttpMethod.Get, url);
+
+            var cliente = _clientFactory.CreateClient();
+
+            HttpResponseMessage respuesta = await cliente.SendAsync(peticion);
+
+            // Validar si consulto lista completa y retorna los datos
+            if (respuesta.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var jsonString = await respuesta.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable>(jsonString);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

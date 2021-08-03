@@ -11,7 +11,7 @@ namespace PeliculasWeb.Repositorio.IRepositorio
         // Interfaz del Repositorio
         Task<IEnumerable> GetTodoAsync(string url);
         Task<T> GetAsync(string url, int Id);
-        Task<bool> CrearAsync(string url, T itemActualizar);
+        Task<bool> CrearAsync(string url, T itemCrear);
         Task<bool> ActualizarAsync(string url, T itemActualizar);
         Task<bool> BorrarAsync(string url, int id);
     }
