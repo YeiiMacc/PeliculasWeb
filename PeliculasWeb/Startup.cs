@@ -48,7 +48,7 @@ namespace PeliculasWeb
 
             app.UseRouting();
 
-            // Damos soporte para CORS
+            // Damos soporte para CORS (Configurar CORS)
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
