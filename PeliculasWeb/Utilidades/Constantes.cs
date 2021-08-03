@@ -7,6 +7,7 @@ namespace PeliculasWeb.Utilidades
 {
     public static class Constantes
     {
+        // Rutas de Acceso Estáticas de la API
         public static string UrlBaseApi = "https://localhost:44367/";
         public static string RutaCategoriasApi = UrlBaseApi + "api/Categorias/";
         public static string RutaPeliculasApi = UrlBaseApi + "api/Peliculas/";
