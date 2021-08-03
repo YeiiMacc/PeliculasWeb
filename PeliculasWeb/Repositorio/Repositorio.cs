@@ -12,6 +12,8 @@ namespace PeliculasWeb.Repositorio
 {
     public class Repositorio<T> : IRepositorio<T> where T : class
     {
+        //Clase que Implementa el Repositorios
+
         // Inyeccion de dependencias se debe implementar el IHttpClientFactory
         private readonly IHttpClientFactory _clientFactory;
         public Repositorio(IHttpClientFactory clientFactory)

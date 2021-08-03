@@ -8,6 +8,7 @@ namespace PeliculasWeb.Repositorio.IRepositorio
 {
     public interface IRepositorio<T> where T: class
     {
+        // Interfaz del Repositorio
         Task<IEnumerable> GetTodoAsync(string url);
         Task<T> GetAsync(string url, int Id);
         Task<bool> CrearAsync(string url, T itemActualizar);
