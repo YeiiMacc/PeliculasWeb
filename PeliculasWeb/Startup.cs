@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PeliculasWeb.Repositorio;
+using PeliculasWeb.Repositorio.IRepositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,12 @@ namespace PeliculasWeb
 
             // Configuración del Cliente HTTP
             // para llamados Http
-            services.AddHttpClient();   
+            services.AddHttpClient();
+
+            // Agregar los servicios(repositorios) como inyeccion de dependencias
+            services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
+            services.AddScoped<IPeliculaRepositorio, PeliculaRepositorio>();
+            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
